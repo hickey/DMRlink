@@ -209,7 +209,7 @@ def build_config(_config_file):
                     FLAG_2 |= 1 << 0
                 CONFIG['SYSTEMS'][section]['LOCAL']['FLAGS'] = '\x00\x00'+chr(FLAG_1)+chr(FLAG_2)
     
-    except ConfigParser.Error, err:
+    except ConfigParser.Error as err:
         print(err)
         sys.exit('Could not parse configuration file, exiting...')
         
