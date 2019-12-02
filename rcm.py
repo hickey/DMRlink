@@ -33,7 +33,10 @@ import binascii
 import dmrlink
 import sys
 from dmrlink import IPSC, mk_ipsc_systems, systems, reportFactory, build_aliases, config_reports
-from dmr_utils.utils import get_alias, int_id
+if (sys.version_info > (3, 0)):
+    from dmr_utils3.utils import get_alias, int_id
+else:
+    from dmr_utils.utils import get_alias, int_id
 from ipsc.ipsc_const import *
 
 __author__      = 'Cortney T. Buffington, N0MJS'

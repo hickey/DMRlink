@@ -26,8 +26,12 @@
 from __future__ import print_function
 
 # Full imports
+import sys
 import logging
-import cPickle as pickle
+if (sys.version_info > (3, 0)):
+    import pickle
+else:
+    import cPickle as pickle
 
 # Function Imports
 from hmac import new as hmac_new
@@ -49,7 +53,10 @@ from ipsc.ipsc_mask import *
 from ipsc.reporting_const import *
 
 # Imports from DMR Utilities package
-from dmr_utils.utils import hex_str_2, hex_str_3, hex_str_4, int_id, try_download, mk_id_dict
+if (sys.version_info > (3, 0)):
+    from dmr_utils3.utils import bytes_2, bytes_3, bytes_4, int_id, try_download, mk_id_dict
+else:
+    from dmr_utils.utils import hex_str_2, hex_str_3, hex_str_4, int_id, try_download, mk_id_dict
 
 
 __author__      = 'Cortney T. Buffington, N0MJS'
@@ -488,7 +495,8 @@ class IPSC(DatagramProtocol):
     
     # Simple function to send packets - handy to have it all in one place for debugging
     #
-    def send_packet(self, _packet, (_host, _port)):
+    def send_packet(self, _packet, _socket):
+        _host, _port = socket
         if self._local['AUTH_ENABLED']:
             _hash = bhex((hmac_new(self._local['AUTH_KEY'],_packet,sha1)).hexdigest()[:20])
             _packet = _packet + _hash
@@ -810,7 +818,8 @@ class IPSC(DatagramProtocol):
     #
     # Callbacks are iterated in the order of "more likely" to "less likely" to reduce processing time
     #
-    def datagramReceived(self, data, (host, port)):
+    def datagramReceived(self, data, socket):
+        host, port = socket
         _packettype = data[0:1]
         _peerid     = data[1:5]
         _ipsc_seq   = data[5:6]
