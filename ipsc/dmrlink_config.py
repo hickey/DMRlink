@@ -18,8 +18,11 @@
 #   Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
 ###############################################################################
 
-import ConfigParser
 import sys
+if (sys.version_info > (3, 0)):
+    import configparser as ConfigParser
+else:
+    import ConfigParser
 
 from socket import getaddrinfo, IPPROTO_UDP
 
