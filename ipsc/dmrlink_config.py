@@ -18,6 +18,7 @@
 #   Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
 ###############################################################################
 
+import pprint
 import sys
 if (sys.version_info > (3, 0)):
     import configparser as ConfigParser
@@ -133,12 +134,12 @@ def build_config(_config_file):
                     'FLAGS': '',
                 
                     # Things we need to know to connect and be a peer in this IPSC
-                    'RADIO_ID':     hex(int(config.get(section, 'RADIO_ID')))[2:].rjust(8,'0').decode('hex'),
+                    'RADIO_ID':     hex(int(config.get(section, 'RADIO_ID')))[2:].rjust(8,'0').encode(),
                     'IP':           config.get(section, 'IP'),
                     'PORT':         config.getint(section, 'PORT'),
                     'ALIVE_TIMER':  config.getint(section, 'ALIVE_TIMER'),
                     'MAX_MISSED':   config.getint(section, 'MAX_MISSED'),
-                    'AUTH_KEY':     (config.get(section, 'AUTH_KEY').rjust(40,'0')).decode('hex'),
+                    'AUTH_KEY':     (config.get(section, 'AUTH_KEY').rjust(40,'0')).encode(),
                     'GROUP_HANGTIME': config.getint(section, 'GROUP_HANGTIME'),
                     'NUM_PEERS': 0,
                     })
