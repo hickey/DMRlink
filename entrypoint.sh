@@ -1,11 +1,13 @@
 #!/bin/bash
 
+set -x
+
 cmd=$1
 shift
 
 if [[ "$cmd" != "" ]]; then
     # if first arg is an executable then run it
-    if [[ -x $cmd ]]; then
+    if [[ -n "$(echo $cmd | grep /)" && -x $cmd ]]; then
         exec $cmd $@
     else
         # search $PATH for $cmd
